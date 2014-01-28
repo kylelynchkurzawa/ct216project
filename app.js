@@ -1,18 +1,17 @@
 var express = require('express');
 var app = express();
 
-var times = [];
+var hbs = require('hbs');
+
+var state = require('./state');
+
+app.set('view engine', 'html');
+app.engine('html', hbs.__express);
+app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-  // Record the new access time
-  times.push(new Date());
-  
-  var message = "Hello world!<br>Visited at:<br>";
-  for(var i = 0; i < times.length; ++i) {
-    message += times[i];
-    message += "<br>";
-  }
-  response.send(message);
+  state.addMessage(new Date());
+  response.render('index', {title:"Hello", messages: state.getMessages()});
 });
 
 app.listen(8625);
