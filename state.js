@@ -2,6 +2,7 @@
 var array = [];
 
 exports.addMessage = function(t) {
+        // comments
 	array.push({ time: t });
 }
 
