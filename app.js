@@ -9,6 +9,8 @@ app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 app.use(express.bodyParser());
 
+var dbManager = state.createDBManager();
+
 app.get('/', function(request, response) {
   state.addMessage(new Date());
   response.render('index', {title:"Hello", messages: state.getMessages()});
