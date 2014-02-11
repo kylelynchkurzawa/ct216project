@@ -1,4 +1,3 @@
-
 var mysql = require('mysql');
 
 var array = [];
@@ -24,13 +23,12 @@ DBManager.prototype.closeConnection = function() {
 	this.connection.end();
 }
 
-DBManager.prototype.findUserID = function() {
-	var queryString = 'SELECT COUNT(*) AS Number FROM User;';
+DBManager.prototype.getAllUsers = function(callback) {
+	var queryString = 'SELECT * FROM User;';
 	this.connection.query(queryString, function(err, results, fields) {
 		if(err) throw err;
 		
-		userID = results[0].Number + 1;
-		console.log('setting user id: ' + userID);
+		callback(results);
 	});
 }
 
@@ -53,3 +51,15 @@ exports.addMessage = function(t) {
 exports.getMessages = function() {
 	return array;
 }	
+
+DBManager.prototype.findUserID = function() {
+	var queryString = 'SELECT COUNT(*) AS Number FROM User;';
+	this.connection.query(queryString, function(err, results, fields) {
+		if(err) throw err;
+		
+		userID = results[0].Number + 1;
+		console.log('setting user id: ' + userID);
+	});
+}
+
+
